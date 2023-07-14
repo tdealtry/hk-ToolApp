@@ -1,0 +1,25 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_ubuntu-latest:
+
+    runs-on: ubuntu-latest
+    container: ghcr.io/hyperk/hk-software:main
+    steps:
+    - name: Framework build
+      run: cd /usr/local/hk/ToolFrameworkCore/src/ && make
+    - uses: actions/checkout@v2
+    - name: build
+      run:  git submodule init && git submodule update && cd hk-DataModel && make && cd ../ && make
+
+ 
+ 

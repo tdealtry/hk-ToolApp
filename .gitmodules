@@ -1,0 +1,6 @@
+[submodule "hk-DataModel"]
+	path = hk-DataModel
+	url = https://github.com/hyperk/hk-DataModel.git
+[submodule "UserTools/ImportedTools/TFToolPack"]
+	path = UserTools/ImportedTools/TFToolPack
+	url = https://github.com/ToolFramework/TFToolPack.git
