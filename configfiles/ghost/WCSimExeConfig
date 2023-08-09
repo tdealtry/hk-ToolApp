@@ -1,0 +1,5 @@
+verbose 2
+
+wcsim_mac_filename /usr/local/hk/hk-ToolApp/UserTools/ImportedTools/GHOST-WCSim/OriginalWCSim/WCSim.mac
+
+number_of_events 5
