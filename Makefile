@@ -1,5 +1,21 @@
 ToolFrameworkPath=/usr/local/hk/ToolFrameworkCore/src
 
+Geant4Path = /usr/local/hk/Geant4/install-Linux_x86_64-gcc_8-python_3.8.13/
+WCSimPath = /usr/local/hk/hk-ToolApp/UserTools/ImportedTools/GHOST-WCSim/OriginalWCSim_build/
+
+ROOT_INCLUDES  = -I$(shell root-config --incdir)
+ROOT_LIBS  = $(shell root-config --libs)
+GEANT4_INCLUDES = -I$(Geant4Path)/include/Geant4/
+GEANT4_LIBS = $(shell geant4-config --libs)
+WCSIM_INCLUDES = -I$(WCSimPath)/include/WCSim/ -DWCSIM_CHECK_GEOMETRY_OVERLAPS=0
+WCSIM_LIBS = -L$(WCSimPath)/lib/ -lWCSimCore -lWCSimRoot
+EXTERNALS := $(ROOT_INCLUDES) \
+	$(ROOT_LIBS) \
+	$(GEANT4_INCLUDES) \
+	$(GEANT4_LIBS) \
+	$(WCSIM_LIBS) \
+	$(WCSIM_INCLUDES)
+
 CXXFLAGS=  -fPIC -O3 -Wpedantic -Wall
 
 ifeq ($(MAKECMDGOALS),debug)
@@ -45,7 +61,7 @@ lib/libMyTools.so: $(ToolObjects)
 
 UserTools/%.o: UserTools/%.cpp 
 	@echo -e "\e[38;5;214m\n*************** Making " $@ "****************\e[0m"
-	-g++ $(CXXFLAGS) -c -o $@ $< -I UserTools $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -pthread
+	-g++ $(CXXFLAGS) -c -o $@ $< -I UserTools $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -pthread $(EXTERNALS)
 
 
 target: remove $(patsubst %.cpp, %.o, $(wildcard UserTools/$(TOOL)/*.cpp))
