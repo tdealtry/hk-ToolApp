@@ -1,1 +1,3 @@
 wcsimexe WCSim_exe configfiles/ghost/WCSimExeConfig
+detector_construction HKG4DetectorConstruction configfiles/ghost/HKG4DetectorConstruction
+tracking_action HKG4TrackingAction configfiles/ghost/HKG4TrackingActionConfig
