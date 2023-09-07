@@ -8,4 +8,4 @@
 #include <myhklib/DummyTool.h>
 #include <myhklib/WCSimTool.h>
 
-#endif //TOOLFRAMEWORKAPPLICAITON_UNITY_H
+#endif  // TOOLFRAMEWORKAPPLICAITON_UNITY_H
