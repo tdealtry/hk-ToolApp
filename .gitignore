@@ -6,6 +6,8 @@ UserTools/*/*.o
 DataModel/*.o
 Dependencies
 main
+.idea
 *.d
 *.root
 *#
+cmake-*

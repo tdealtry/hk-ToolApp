@@ -5,6 +5,8 @@
 
 int main(int argc, char* argv[]) {
 
+	std::cout << "Hello" << std::endl;
+
 	std::string config_file;
 	if(argc == 1)
 		config_file = "configfiles/Dummy/ToolChainConfig";
