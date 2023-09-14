@@ -12,3 +12,9 @@ do
 done
 
 export SEGFAULT_SIGNALS="all"
+
+export TOOLAPPDIR=/usr/local/hk/hk-ToolApp
+export DATAMODELDIR=/usr/local/hk/hk-ToolApp/hk-DataModel
+export GHOSTWCSIMDIR=/usr/local/hk/hk-ToolApp/UserTools/ImportedTools/GHOST-WCSim
+cd $GHOSTWCSIMDIR/OriginalWCSim_build; source ./this_wcsim.sh; cd -
+
