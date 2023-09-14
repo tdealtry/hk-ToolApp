@@ -9,17 +9,17 @@ GEANT4_INCLUDES = -I$(Geant4Path)/include/Geant4/
 GEANT4_LIBS = $(shell geant4-config --libs)
 WCSIM_INCLUDES = -I$(WCSimPath)/include/WCSim/ -DWCSIM_CHECK_GEOMETRY_OVERLAPS=0
 WCSIM_LIBS = -L$(WCSimPath)/lib/ -lWCSimCore -lWCSimRoot
-EXTERNALS := $(ROOT_INCLUDES) \
-	$(ROOT_LIBS) \
+EXTERNAL_INCLUDES := $(ROOT_INCLUDES) \
 	$(GEANT4_INCLUDES) \
+	$(WCSIM_INCLUDES)
+EXTERNAL_LIBS := $(ROOT_LIBS) \
 	$(GEANT4_LIBS) \
-	$(WCSIM_LIBS) \
 	$(WCSIM_INCLUDES)
 
-CXXFLAGS=  -fPIC -O3 -Wpedantic -Wall
+CXXFLAGS=  -fPIC -O3 -Wpedantic -Wall #-std=c++17
 
 ifeq ($(MAKECMDGOALS),debug)
-CXXFLAGS+= -O0 -g -lSegFault -rdynamic -DDEBUG
+CXXFLAGS+= -O0 -g -lSegFault -rdynamic -DDEBUG #-fsanitize=address
 endif
 
 ToolLibs = $(patsubst %.so, %, $(patsubst lib%, -l%,$(filter lib%, $(subst /, , $(wildcard UserTools/*/*.so)))))
@@ -28,19 +28,18 @@ ToolObjects = $(patsubst %.cpp, %.o, $(filter-out $(patsubst %.so, %.cpp, $(Tool
 ToolIncludes =  $(patsubst %, -I %, $(ToolPaths))
 ToolLibPaths = $(patsubst %, -L %, $(ToolPaths))
 
-
 debug: all
 
 all: lib/libMyTools.so main
 
 main: src/main.cpp lib/libMyTools.so  
 	@echo -e "\e[38;5;214m\n*************** Making " $@ "****************\e[0m"
-	g++ $(CXXFLAGS) src/main.cpp -o main -I include -L lib -lMyTools -lToolChain -lpthread -I hk-DataModel/ -L hk-DataModel/ -lDataModel $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include
+	g++ $(CXXFLAGS) src/main.cpp -o main -I include -L lib -lMyTools -lToolChain -lpthread -I hk-DataModel/DataModel/ -L hk-DataModel/ -lDataModel $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include $(ROOT_INCLUDES) $(ROOT_LIBS)
 
 
 #lib/libToolChain.so: lib/libMyTools.so 
 #	@echo -e "\e[38;5;226m\n*************** Making " $@ "****************\e[0m"
-#	g++ $(CXXFLAGS) -shared $(ToolFrameworkPath)/src/ToolChain/ToolChain.cpp -o lib/libToolChain.so -I include -L lib -lMyTools -lpthread $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include
+#	g++ $(CXXFLAGS) -shared $(ToolFrameworkPath)/src/ToolChain/ToolChain.cpp -o lib/libToolChain.so -I include -L lib -lMyTools -lpthread $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include
 
 
 clean: 
@@ -53,15 +52,15 @@ clean:
 lib/libMyTools.so: $(ToolObjects) 
 
 	@echo -e "\e[38;5;214m\n*************** Making " $@ "****************\e[0m"
-	g++ $(CXXFLAGS) -shared -o lib/libMyTools.so $^  $(ToolIncludes) $(ToolLibPaths) $(ToolLibs)  -I hk-DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -lpthread
+	g++ $(CXXFLAGS) -shared -o lib/libMyTools.so $^  $(ToolIncludes) $(ToolLibPaths) $(ToolLibs)  -I hk-DataModel/DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -lpthread
 
 #UserTools/Factory/Factory.o: UserTools/Factory/Factory.cpp | $(ToolObjects)
 #	@echo -e "\e[38;5;214m\n*************** Making " $@ "****************\e[0m"
-#	-g++ $(CXXFLAGS) -c -o $@ $< -I UserTools $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -pthread
+#	-g++ $(CXXFLAGS) -c -o $@ $< -I UserTools $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -pthread
 
 UserTools/%.o: UserTools/%.cpp 
 	@echo -e "\e[38;5;214m\n*************** Making " $@ "****************\e[0m"
-	-g++ $(CXXFLAGS) -c -o $@ $< -I UserTools $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -pthread $(EXTERNALS)
+	-g++ $(CXXFLAGS) -c -o $@ $< -I UserTools $(ToolIncludes) $(ToolLibPaths) $(ToolLibs) -I hk-DataModel/DataModel/ -L hk-DataModel/ -lDataModel -L $(ToolFrameworkPath)/lib -lStore -lLogging -I $(ToolFrameworkPath)/include -pthread $(EXTERNAL_INCLUDES)
 
 
 target: remove $(patsubst %.cpp, %.o, $(wildcard UserTools/$(TOOL)/*.cpp))
