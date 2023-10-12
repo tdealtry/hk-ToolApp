@@ -11,3 +11,7 @@ main
 *.root
 *#
 cmake-*
+# removing the backup unity files and so on...
+*.bak.*
+build-*
+install-*
