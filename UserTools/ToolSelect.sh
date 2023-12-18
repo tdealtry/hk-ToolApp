@@ -52,6 +52,7 @@ then
 fi
 
 
+
 #cat Factory.cpp | grep -v '/' |grep if| awk '{print $4}' | sed s:';':: > on
 num=1
 
@@ -65,10 +66,10 @@ dialog --backtitle "Options" \
 
 if [ $? -eq 0 ]
 then
-    
+
     if [ `cat tmpoption` -eq 1 ]
     then
-	
+
 	dialog --checklist "Activate or Deactivate Tools with <spacebar>, Enter for OK and ESC for Cancel:" 0 0 0 \
 	    `for Tool in \`ls */*.cpp | grep -v template/ | sed s:/:' ': | awk '{print $2}' | sed s:.cpp:: | grep -v Factory\`
 do
@@ -94,24 +95,24 @@ do
     echo "$Tool $num off "
     num=$(expr 1 + $num)
 done` 2> tmptools
-	
+
 	if [ $? -eq 0 ]
 	then
-	    
+
 	    dialog --title "Message"  --yesno "Backup existing configuration?" 0 0
 	    if [ $? -eq 0 ]
 	    then
 		cp Unity.h Unity.bak.`date +%F.%T`
 		cp Factory/Factory.cpp Factory/Factory.bak.`date +%F.%T`
 	    fi
-	    
+
 	    rm -f Unity.h
 	    for Tool in `cat tmptools`
 	    do
 		echo "#include <$Tool.h>" >> Unity.h
 	    done
 	    touch Unity.h
-	    
+
 	    echo "#include \"Factory.h\"
 
 Tool* Factory(std::string tool) {
@@ -122,27 +123,27 @@ Tool* ret=0;
 	    do
 		echo "if (tool==\"$Tool\") ret=new $Tool;" >> Factory/Factory.cpp
 	    done
-	    
+
 	    echo "return ret;
 }" >> Factory/Factory.cpp
-	    
+
 	    for dir in `ls */ | grep / | sed s:'/\:':: | grep -v Factory | grep -v template | grep -v InactiveTools | grep -v ImportedTools`
 	    do
-		exists=0		
-		for Tool in `cat tmptools`		
+		exists=0
+		for Tool in `cat tmptools`
 		do
-		    if [ $Tool == $dir ] 
+		    if [ $Tool == $dir ]
 		    then
 			exists=1
 		    fi
 		done
-		
+
 		if [ $exists -eq 0 ]
 		then
 		    mv $dir InactiveTools/
 		fi
 	    done
-	    
+
 	    for dir in `ls InactiveTools/`
             do
                 for Tool in `cat tmptools`
@@ -152,25 +153,25 @@ Tool* ret=0;
                         mv InactiveTools/$dir ./
                     fi
                 done
-		
-            done	
-	    
-	    
-	    
-	fi    
-	
+
+            done
+
+
+
+	fi
+
 	rm -f tmptools
-	
-	
+
+
     else
-	
+
 	dialog --radiolist "Select backup with <spacebar>, Enter for OK and ESC for Cancel:" 0 0 0 \
 	    `for backup in \`ls *.bak.*\`
 	 do
 	echo $backup . off
 	 done
 	` 2> tmpbackup
-	
+
 	if [ $? -eq 0 ]
         then
 
@@ -183,11 +184,11 @@ Tool* ret=0;
                     cp Unity.h Unity.bak.`date +%F.%T`
                     cp Factory/Factory.cpp Factory/Factory.bak.`date +%F.%T`
 		fi
-	
+
 		cp `cat tmpbackup` Unity.h
 		cp `cat tmpbackup | sed s:Unity:Factory/Factory:` Factory/Factory.cpp
 	    fi
-	    
+
 	fi
 
 	rm -f tmpbackup
@@ -225,7 +226,7 @@ Tool* ret=0;
 
 
     fi
-    
+
 
 fi
 
