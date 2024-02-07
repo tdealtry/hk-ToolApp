@@ -35,10 +35,12 @@ ENDMACRO()
 SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
 MESSAGE(STATUS "List of tools dir to be added: ${SUBDIRS}")
+set (HKFACTORY_SRC_TOOLS "")
 FOREACH (dir ${SUBDIRS})
     hk_add_tool(${dir})
-    list( APPEND PUBLIC_EXT_LIBS ${dir})
 ENDFOREACH ()
 
+MESSAGE("Found cpp tools to link the HK factory against: ${HKFACTORY_SRC_TOOLS}")
 
+include_directories(. BEFORE)
 add_subdirectory(Factory)
