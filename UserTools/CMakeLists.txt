@@ -6,7 +6,7 @@ pbuilder_library(
         TARGET HKToolChain
         SOURCES ${TOOLCHAIN_SRC}
         PROJECT_LIBRARIES HKFactory
-        PUBLIC_EXTERNAL_LIBRARIES ${PUBLIC_EXT_LIBRARIES} # should contain at least ToolFrameworkCore::ToolFrameworkCore and hk-DataModel::DataModel
+        PUBLIC_EXTERNAL_LIBRARIES ${PUBLIC_EXT_LIBRARIES} /usr/local/hk/hk-ToolApp/../GHOST-WCSim/install-Linux_x86_64-gcc_8-python_3.8.13/lib/libGHOST-Utilities.so.0.0.0 # should contain at least ToolFrameworkCore::ToolFrameworkCore and hk-DataModel::DataModel
         PRIVATE_EXTERNAL_LIBRARIES ${PRIVATE_EXT_LIBS}
 )
 # Exporting library

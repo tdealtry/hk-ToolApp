@@ -16,5 +16,16 @@ set( PUBLIC_EXT_LIBS )
 set( PRIVATE_EXT_LIBS )
 hk_check_dependencies()
 
+option(WCSIM_Check_Geometry_Overlaps
+  "Toggle WCSim to save photon scattering and reflection history"
+  OFF
+)
+if(WCSIM_Check_Geometry_Overlaps STREQUAL ON)
+  add_definitions(-DWCSIM_CHECK_GEOMETRY_OVERLAPS=1)
+else()
+  add_definitions(-DWCSIM_CHECK_GEOMETRY_OVERLAPS=0)
+endif()
+
 add_subdirectory(app)
 add_subdirectory(UserTools)
+
