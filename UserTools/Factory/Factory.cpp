@@ -14,6 +14,6 @@ Tool* Factory(std::string tool) {
 	if (tool=="HKG4SteppingAction") ret = new HK::Ghost::G4::HKG4SteppingAction;
 	if (tool=="HKG4PrimaryGeneratorAction") ret = new HK::Ghost::G4::HKG4PrimaryGeneratorAction;
 	if (tool=="HKG4EventAction") ret = new HK::Ghost::G4::HKG4EventAction;
-	//if (tool=="X") ret = new HK::Ghost::G4::X;
+	if (tool=="HKG4RunAction") ret = new HK::Ghost::G4::HKG4RunAction;
 	return ret;
 }

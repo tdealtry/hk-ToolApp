@@ -3,8 +3,10 @@ test2 DummyTool configfiles/Dummy/DummyToolConfig
 test3 TestTool configfiles/Dummy/DummyToolConfig
 ghost-wcsim WCSim_exe configfiles/Dummy/WCSim_exe
 physlist HKG4PhysicsList configfiles/Dummy/DummyToolConfig
-#tracking HKG4TrackingAction configfiles/Dummy/DummyToolConfig
-#stacking HKG4StackingAction configfiles/Dummy/DummyToolConfig
-#stepping HKG4SteppingAction configfiles/Dummy/DummyToolConfig
 generator HKG4PrimaryGeneratorAction configfiles/Dummy/DummyToolConfig
+run-action HKG4RunAction configfiles/Dummy/DummyToolConfig
 event-action HKG4EventAction configfiles/Dummy/DummyToolConfig
+stacking HKG4StackingAction configfiles/Dummy/DummyToolConfig
+stepping HKG4SteppingAction configfiles/Dummy/DummyToolConfig
+tracking HKG4TrackingAction configfiles/Dummy/DummyToolConfig
+
