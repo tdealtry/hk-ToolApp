@@ -15,5 +15,6 @@ Tool* Factory(std::string tool) {
 	if (tool=="HKG4PrimaryGeneratorAction") ret = new HK::Ghost::G4::HKG4PrimaryGeneratorAction;
 	if (tool=="HKG4EventAction") ret = new HK::Ghost::G4::HKG4EventAction;
 	if (tool=="HKG4RunAction") ret = new HK::Ghost::G4::HKG4RunAction;
+	if (tool=="HKGFileWriterRootWCSim") ret = new HK::Ghost::IO::HKGFileWriterRootWCSim;
 	return ret;
 }

@@ -9,4 +9,4 @@ event-action HKG4EventAction configfiles/Dummy/DummyToolConfig
 stacking HKG4StackingAction configfiles/Dummy/DummyToolConfig
 stepping HKG4SteppingAction configfiles/Dummy/DummyToolConfig
 tracking HKG4TrackingAction configfiles/Dummy/DummyToolConfig
-
+writer HKGFileWriterRootWCSim configfiles/Dummy/DummyToolConfig

@@ -9,3 +9,4 @@
 #include <HKG4PrimaryGeneratorAction.h>
 #include <HKG4EventAction.h>
 #include <HKG4RunAction.h>
+#include <HKGFileWriterRootWCSim.h>
