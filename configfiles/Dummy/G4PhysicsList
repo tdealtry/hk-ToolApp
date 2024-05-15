@@ -1,0 +1,2 @@
+verbose 3
+# wcsim_mac_job_opt_filename macros/jobOptions.mac #defaults to $WCSIM_BUILD_DIR/macros/jobOptions.mac
