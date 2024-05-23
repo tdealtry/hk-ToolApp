@@ -1,4 +1,4 @@
 verbose 5
-number_of_events 1
+number_of_events 10
 # wcsim_mac_filename WCSim.mac #defaults to $WCSIM_BUILD_DIR/WCSim.mac
 # wcsim_mac_tuning_filename macros/tuning_parameters.mac #defaults to $WCSIM_BUILD_DIR/macros/tuning_parameters.mac

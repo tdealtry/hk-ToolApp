@@ -1,0 +1,3 @@
+verbose 1
+generator_type kinfile
+input_filename eminus_10.0MeV_center_4pi_SuperK_000.kin
