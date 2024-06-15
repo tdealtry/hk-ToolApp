@@ -7,6 +7,6 @@
 #include <HKG4PhysicsList.h>
 #include <HKG4SteppingAction.h>
 #include <GhostG4PrimaryGeneratorAction.h>
-#include <HKG4EventAction.h>
+#include <GhostG4EventAction.h>
 #include <HKG4RunAction.h>
 #include <HKGFileWriterRootWCSim.h>
