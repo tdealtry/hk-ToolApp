@@ -10,3 +10,4 @@
 #include <GhostG4EventAction.h>
 #include <HKG4RunAction.h>
 #include <HKGFileWriterRootWCSim.h>
+#include <GhostPMTSimProcessor.h>
